@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>2.2 Java Cäsar Chiffre</h2>
+
+    <p>Mit diesem Code wird ein Text verschlüsselt und dadurch unlesbar gemacht.<br>
+        Wenn man das richtige Passwort eingibt wird es wieder entschlüssel.</p>
+
+    <pre class="code">
+import java.io.*;
+import java.util.Scanner;
+
+public class AufgabeCäsarChiffre {
+
+    public static void main(String[] args) throws IOException {
+
+        String Password = "GutesPasswort";
+        String password = "";
+        Scanner scanner = new Scanner(System.in);
+        int offset = 5;
+
+        BufferedReader br = new BufferedReader(new FileReader("Text.txt"));
+        String zeile2 = (br.readLine());
+
+        StringBuilder stext = new StringBuilder();
+        while (zeile2 != null) {
+            stext.append(zeile2 + "\n");
+            zeile2 = (br.readLine());
+        }
+        char[] text = stext.toString().toCharArray();
+
+        char[] vtext = verschluesseln(offset, text);
+
+        File text2 = new File("Text2.txt");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(text2));
+        bw.write(vtext);
+        bw.close();
+
+        BufferedReader br2 = new BufferedReader(new FileReader(text2));
+
+        char[] zeile = br2.readLine().toCharArray();
+        System.out.println(zeile);
+
+        char trypw = '0';
+
+        do {
+            System.out.println("Passwort eingeben zum entschlüsseln");
+            password = scanner.nextLine();
+            if (!(password).equals(Password)) {
+                System.out.println("Versuchen den Text ohne Schlüssel zu knacken? Drücke 'y'");
+                trypw = scanner.next().charAt(0);
+                scanner.nextLine();
+            }
+        } while (!(password).equals(Password) && trypw != 'y');
+
+        char[] etext;
+        trypw = '0';
+        int i = 0;
+
+        if ((password).equals(Password)) {
+            etext = entschluesseln(offset, zeile);
+
+            System.out.println(etext);
+        }
+
+        else
+            do {
+
+                i++;
+                etext = entschluesseln(i, zeile);
+                System.out.println("Wenn folgender Text Sinn ergibt, drücke 'y'");
+                System.out.println(etext);
+                try {
+                    trypw = scanner.nextLine().charAt(0);
+                } catch (Exception e) {
+                }
+
+            } while (trypw != 'y');
+
+        BufferedWriter bw2 = new BufferedWriter(new FileWriter(text2));
+        bw2.write(etext);
+        bw2.close();
+        System.out.println("Datei gespeichert");
+
+    }
+
+    public static char[] verschluesseln(int offset, char[] charArray) {
+
+        char[] cryptArray = new char[charArray.length];
+        for (int i = 0; i &lt; charArray.length; i++) {
+            int verschiebung = (charArray[i] + offset) % 256;
+            cryptArray[i] = (char) (verschiebung);
+        }
+        return cryptArray;
+    }
+
+    public static char[] entschluesseln(int offset, char[] charArray) {
+
+        char[] cryptArray = new char[charArray.length];
+        int verschiebung;
+        for (int i = 0; i &lt; charArray.length; i++) {
+            if (charArray[i] - offset &lt; 0)
+                verschiebung = charArray[i] - offset + 256;
+            else
+                verschiebung = (charArray[i] - offset) % 256;
+            cryptArray[i] = (char) (verschiebung);
+        }
+        return cryptArray;
+    }
+
+}
+
+</pre>
+
+    <img class="img2" src="Bilder/JavaCäsarChiffre.PNG" alt="Ergebnis in der Konsole">
+
+    <p><a class="back" href="JavaPyramide.html">Zurück</a> <a class="back" href="JavaKassabon.html">Weiter</a> <a
+            class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+
+
+</body>
+
+</html>

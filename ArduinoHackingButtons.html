@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>3.6 Hacking Buttons</h2>
+
+    <p>Bei diesem Projekt wurde eine Stirnlampe auseinandergebaut und mit Arduino verkabelt.<br>
+        Anschließend wurde ein kurzes Programm geschrieben, damit das Licht in einen bestimmten Rhythmus blinkt.</p>
+
+    <pre class="code2">
+const int optoPin = 2;
+
+void setup() {
+    pinMode (optoPin, OUTPUT);
+
+}
+
+void loop() {
+    digitalWrite (optoPin, LOW);
+    delay (100);
+    digitalWrite (optoPin, HIGH);
+    delay (200);
+    digitalWrite (optoPin, LOW);
+    delay (300);
+    digitalWrite (optoPin, HIGH);
+    delay (400);
+    
+}
+    </pre>
+
+    <video class="img3" controls loop>
+        <source src="bilder/ArduinoHackingButtons.MOV" type="video/mp4">
+    </video>
+
+    <p><a class="back" href="ArduinoTouchLamp.html">Zurück</a> <a class="back" href="ArduinoTicTacToe.html">Weiter</a>
+        <a class="back" href="Portfolio.html">Zur Übersicht</a>
+    </p>
+
+</body>
+
+</html>

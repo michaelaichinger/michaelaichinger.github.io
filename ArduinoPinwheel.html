@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>3.2 Pinwheel</h2>
+
+    <p>Ein Motoer der sich dreht, wenn der Knopf gedrückt wird.</p>
+
+    <pre class="code">
+
+const int switchPin = 2;
+const int motorPin = 9;
+int switchState = 0;
+
+void setup() {
+    pinMode(motorPin, OUTPUT);
+    pinMode(switchPin, INPUT);
+
+}
+
+void loop() {
+    switchState = digitalRead(switchPin);
+
+    if (switchState == HIGH){
+    digitalWrite(motorPin, HIGH);
+    }
+    else {
+    digitalWrite(motorPin, LOW);
+    }                                           //Knopf drücken, dann dreht sich der Motor
+
+}       
+
+    </pre>
+
+    <img class="img3" src="bilder/ArduinoPinwheel.JPG" alt="Bild vom Projekt">
+
+    <p><a class="back" href="ArduinoThermometer.html">Zurück</a> <a class="back" href="ArduinoHourglass.html">Weiter</a>
+        <a class="back" href="Portfolio.html">Zur Übersicht</a>
+    </p>
+
+</body>
+
+</html>

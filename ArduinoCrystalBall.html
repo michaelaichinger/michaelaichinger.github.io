@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>3.4 CrystalBall</h2>
+
+    <p>Auf dem kleinen Bildschirm wird nach Zufallsprinzip eine Antwort angezeigt. <br>
+        Die Antwort ändert sich wieder, wenn man das Gerät schüttelt.</p>
+
+    <pre class="code">
+
+#include &lt;LiquidCrystal.h&gt;
+    LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+    
+    const int switchPin = 6;        //Pin für der Tilt-Sensor
+    int switchState = 0;
+    int prevSwitchState = 0;
+    int reply;
+    
+    void setup() {
+        lcd.begin(16, 2);             //Größe des Bildschirms; in diesem Fall 16 Buchstaben lang und 2 Zeilen hoch
+        pinMode(switchPin, INPUT);
+    
+        lcd.print("Ask the");
+    
+        lcd.setCursor(0, 1);          //Setzt den Cursor auf die Position: "0"=erster Buchstabe, "1"=zweite Zeile; von diesem Punkt aus wird geschrieben
+        lcd.print("Crystal Ball!");
+    }
+    
+    void loop() {
+        switchState = digitalRead(switchPin);
+    
+        if (switchState != prevSwitchState) {
+        if (switchState == LOW) {
+            reply = random(8);                  //Wählt eine zufällige Zahl von 0-7
+    
+            lcd.clear();                        //Bildschirm wird wieder leer
+            lcd.setCursor(0, 0);
+            lcd.print("The ball says:");
+            lcd.setCursor(0, 1);
+    
+            switch (reply) {                      //(
+            case 0:
+                lcd.print("Yes");
+                break;
+            case 1:
+                lcd.print("Most likely");
+                break;
+            case 2:
+                lcd.print("Certainly");
+                break;
+            case 3:
+                lcd.print("Outlook good");        //Zeigt je nach dem welche zufällige Zahl gewählt wurde eine bestimmte Antwort
+                break;
+            case 4:
+                lcd.print("Unsure");
+                break;
+            case 5:
+                lcd.print("Ask again");
+                break;
+            case 6:
+                lcd.print("Doubtful");
+                break;
+            case 7:
+                lcd.print("No");
+                break;                            //)
+            }
+        }
+        }
+        prevSwitchState = switchState;
+    }
+
+    </pre>
+
+    <img class="img3" src="bilder/ArduinoCrystalBall.JPG" alt="Bild vom Projekt">
+
+    <p><a class="back" href="ArduinoHourglass.html">Zurück</a> <a class="back" href="ArduinoTouchLamp.html">Weiter</a>
+        <a class="back" href="Portfolio.html">Zur Übersicht</a>
+    </p>
+
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>2.5 Java Kino</h2>
+
+    <p>Es werden nacheinander Fragen gestellt, z.B. welchen Film man sehen will, ob man noch was essen will, usw.<br>
+        Je nach dem wie man antwortet bekommt man ein anderes Ergebnis.</p>
+
+    <pre class="code">
+import java.util.Scanner;
+import java.util.Random;
+
+public class AufgabeKino {
+
+    public static void main(String[] args) {
+
+        boolean Ticket = false;
+        char T = 't'; //für Ticket
+        int i = -1;
+        Scanner scanner = new Scanner(System.in);
+        
+        String film[]= {"Film1", "Film2", "Film3"};
+        byte uhr[]= {17, 18, 20};
+        byte zeit[]= {15, 05, 30};
+        byte saal[]= {4, 2, 1};
+        String d3[]= {" 3D ", " ", " "};
+        String ausgebucht[]= {"nein", "ja", "nein"};
+        String uhrzeit="error";
+
+        do {
+            do
+                try {
+                    System.out.println("\nWelchen Film willst du sehen? (Nur die Zahl eingeben)");
+                    System.out.println("   Film		Zeit	Saal	 3D	ausgebucht");
+                    System.out.println();
+                    for (int j = 0; j &lt; film.length; j++) {
+                        if (zeit[j]&lt;10) uhrzeit= uhr[j]+":0"+zeit[j];
+                        else uhrzeit=uhr[j]+":"+zeit[j];
+                        System.out.println(j + 1 + ". "+film[j]+"	"+uhrzeit+"	Saal "+saal[j]+"	"+d3[j]+"	"+ausgebucht[j]);
+                    }
+                        System.out.println();
+                        
+                    i = scanner.nextByte()-1;
+                } catch (Exception e) {scanner.nextLine();
+                    System.out.println("Nur die Zahl eingeben/Nur gültige Zahl eingeben!");
+                }
+            while (i &lt; 0||i>=film.length);
+            
+
+                
+
+            if (ausgebucht[i]!="ja") {
+                do {
+                    System.out.println("Der Film " + film[i] + d3[i] + "läuft um " + uhr[i] + ":"+zeit[i]+" im Saal " + saal[i]);
+                    System.out.println("Willst du ein Ticket kaufen? (y/n)");
+                    T = scanner.next().charAt(0);
+                    if (T == 'y')
+                        Ticket = true;
+                } while (T != 'y' && T != 'n');
+
+            } else
+                System.out.println("Der Film " + film[i] + " ist leider ausgebucht");
+
+        } while (!Ticket);
+
+        
+        
+        
+        byte uhr2 = -1;
+        int zeit2 = -1;
+        boolean essen = false;
+
+        do {
+            try {
+                System.out.println("Wie spät ist es jetzt? (erst nur Stunden)");
+
+                uhr2 = scanner.nextByte();
+            } catch (Exception e) {scanner.nextLine();
+                System.out.println("nur gültige Zahlen eingeben");
+            }
+        } while (uhr2 &lt; 0 || uhr2 >= 24);
+
+        do {
+            try {
+                System.out.println("Wie viel Minuten?");
+                zeit2 = scanner.nextInt();
+            } catch (Exception e) {scanner.nextLine();
+                System.out.println("nur gültige Zahlen eingeben");
+            }
+        } while (zeit2 &lt; 0 || zeit2 >= 60);
+
+        int Restzeit = uhr[i] * 60 - uhr2 * 60 + zeit[i] - zeit2;
+        if (Restzeit &lt; 10 && Restzeit >= 0)
+            System.out.println(
+                    "Du hast nur noch " + Restzeit + " Minuten Zeit, du gehst nur noch schnell auf die Toilette");
+        else if (Restzeit &lt; 0) {
+            Restzeit = Restzeit * -1;
+            System.out.println("Du bist schon " + Restzeit
+                    + " Minuten zu spät, gehst aber trotzdem noch schnell auf die Toilette.");
+        } else {
+            System.out.println(
+                    "Du hast noch " + Restzeit + " Minuten Zeit, du kannst dir also noch etwas zu Essen kaufen");
+            essen = true;
+        }
+
+        if (essen) {
+
+            double geld = 65.50;
+            int k = -1;
+            String essenListe[]= {"Burger", "Pommes", "Pizza", "Getränk"};
+            double essenPreis[]= {6.50, 3.00, 9.50, 3.50};
+            byte essenStk[]= {0, 0, 0, 0};
+            boolean alles= false;
+            double essenGesammt = 0;
+
+            do {
+                do {
+                    try {
+                        k = 0;
+                        System.out.println("Was möchtest du essen?");
+                        for (int j = 0; j &lt; essenListe.length; j++) {
+                            System.out.println(
+                                    j + 1 + ". " + essenListe[j] + ":	" + essenPreis[j] + " €	" + essenStk[j]);
+                        }
+                        System.out.println(essenListe.length + 1 + ". Danke, das ist alles.");
+                        k = scanner.nextByte() - 1;
+                        scanner.nextLine();
+                        if (k &lt; essenListe.length)
+                            essenStk[k]++;
+                        else if (k == essenListe.length)
+                            alles = true;
+                    } catch (Exception e) {
+                        scanner.nextLine();
+                        System.out.println("Nur gültige Zahl eingeben!");
+                    }
+                    ;
+                } while (!alles);
+                essenGesammt=0;
+                for (int j = 0; j &lt; essenListe.length; j++)
+                    essenGesammt = essenGesammt + essenPreis[j] * essenStk[j];
+                if (essenGesammt > geld) {
+                    double fehlgeld = essenGesammt - geld;
+                    System.out.println("Dir fehlen " + fehlgeld + " €");
+                    for (int j = 0; j &lt; essenStk.length; j++)
+                        essenStk[j] = 0;
+                    alles = false;
+                }
+            } while (essenGesammt > geld);
+
+            if (essenGesammt > 0) {
+
+                System.out.println("Das macht dann " + essenGesammt + " €");
+
+                double Restgeld = geld - essenGesammt;
+
+                if (Restgeld == 0)
+                    System.out.println("Passt genau");
+                else
+                    System.out.println("Dein Restgeld beträgt " + Restgeld + " €");
+
+                Random Glückszahl = new Random();
+                int nGlückszahl;
+                boolean Prim = true;
+                System.out.println(
+                        "Ziehe eine Zahl, wenn die Zahl durch 10 teilbar, oder eine Primzahl ist, brauchst du den Einkauf nicht bezahlen"
+                                + "\nDrücke Enter");
+                scanner.nextLine();
+
+                nGlückszahl = 1 + Glückszahl.nextInt(1000);
+                System.out.println(nGlückszahl);
+
+                for (i = 2; i &lt; nGlückszahl; i++) {
+                    if (nGlückszahl % i == 0) {
+                        Prim = false;
+                        break;
+                    }
+                }
+
+                if (Prim)
+                    System.out.println("Glückwunsch, " + nGlückszahl + " ist eine Primzahl."
+                            + "\nDein Essen ist somit kostenlos.");
+                else if (nGlückszahl % 10 == 0)
+                    System.out.println("Glückwunsch, " + nGlückszahl + " ist durch 10 teilbar."
+                            + "\nDein Essen ist somit kostenlos.");
+                else
+                    System.out.println(
+                            "Schade, " + nGlückszahl + " ist leider keine Primzahl und ist nicht durch 10 teilbar"
+                                    + "\nAlso musst du den Einkauf doch bezahlen");
+            } else
+                System.out.println("Du hast dich dazu entschieden doch nichts zu essen.");
+        }
+
+    }
+
+}
+
+</pre>
+
+    <img class="img2" src="Bilder/JavaKino.PNG" alt="Ergebnis in der Konsole">
+
+    <p><a class="back" href="JavaPasswort.html">Zurück</a> <a class="back" href="ArduinoThermometer.html">Weiter</a> <a
+            class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+
+
+</body>
+
+</html>

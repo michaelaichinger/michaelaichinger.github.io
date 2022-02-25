@@ -1,0 +1,43 @@
+.Hotelname
+    {font-size: 50px;}
+
+.Link
+    {background-color: skyblue;
+    font-size: 120%;
+    border: solid black ;}
+/*soll die Links zu den anderen Seiten besser aussehen lassen*/
+
+h1 {color: darkblue;}
+
+table, th, td
+    {border-spacing: 0;
+    border-collapse: collapse;
+    border: solid black;
+    font-size: 150%;}
+th:not(:first-of-type)
+    {border: solid thin black;
+    border-bottom: solid black;}
+td
+    {border: solid thin black;
+    font-size: 100%;}
+td:first-of-type
+    {border-right: solid black;
+    font-size: 150%;}
+/*Der linke und obere Text soll größer sein. Unter Personen und neben Übernachtung soll jeweils eine durchgehende dicke Linie sein.*/
+
+.flex-container
+    {display: flex;
+    justify-content: space-between;}
+
+.flex-item2 {align-self: flex-end;}
+/*Der mittlere Text soll unten stehen.*/
+
+.flex-container2
+    {display: flex;
+    justify-content:space-between;}
+
+.flex-item5 
+    {color: darkblue;
+    font-size: 400%;}
+/*links und rechts ein Bild und ein großes "Willkommen" in der Mitte.*/
+

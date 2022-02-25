@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>3.1 Thermometer</h2>
+
+    <p>Je nach Temperatur leuchten die LEDs<br>
+        Ab 22°C leuchtet das Erste, ab 24°C das Zweite und ab 26° das Dritte.</p>
+
+    <pre class="code">
+
+const int sensorPin = A0;
+const float baselineTemp = 20.0;
+
+void setup() {
+    Serial.begin(9600);       //Stellt eine Verbindung zwischen Arudino und dem Computer her mit einer Geschwindigeit von 9600 bit/s.
+
+    for (int pinNumber = 2; pinNumber &lt; 5; pinNumber++) {
+    pinMode(pinNumber, OUTPUT);
+    digitalWrite(pinNumber, LOW);
+    }       //Pins 3-5 werden initialisiert und leuchten (noch) nicht
+
+}
+
+void loop() {
+    int sensorVal = analogRead(sensorPin);    //liest den Wert vom Sensor; Der Wert ist die Spannung die auf dem Pin liegt (0-1023)
+    Serial.print("Sensor Value: ");           //Schreibt etwas auf den Serial Monitor
+    Serial.print(sensorVal);
+
+    float voltage = (sensorVal/1024.0)*5.0;   //Umrechnung vom Sensor-Wert auf Volt
+    Serial.print(", Volts: ");
+    Serial.print(voltage);
+
+    float temperature = (voltage - 0.5)*100;  //Umrechnung von Volt auf Temperatur
+    Serial.print (", ");
+    Serial.print (temperature);
+    Serial.println ("°C");                    //println startet nach dem Text eine neue Zeile
+
+
+    if(temperature&lt;baselineTemp+2){
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    }else if(temperature&gt;=baselineTemp+2&&temperature&lt;baselineTemp+4){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    }else if(temperature&gt;=baselineTemp+4&&temperature&lt;baselineTemp+6){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    }else if(temperature&gt;=baselineTemp+6){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    } //Pins leuchten je nach Temperatur: unter 22°C keine, 22-24°C eines, 24-26°C zwei, über 26°C alle drei
+    delay(200);
+}
+
+    </pre>
+
+    <img class="img3" src="bilder/ArduinoThermometer.JPG" alt="Bild vom Projekt">
+
+    <p><a class="back" href="JavaKino.html">Zurück</a> <a class="back" href="ArduinoPinwheel.html">Weiter</a> <a
+            class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+</body>
+
+</html>

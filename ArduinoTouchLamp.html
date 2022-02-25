@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>3.5 Touch Lamp</h2>
+
+    <p>Das Licht leuchtet, wenn man die Alufolie berührt.</p>
+
+    <pre class="code">
+
+#include &lt;CapacitiveSensor.h&gt;
+    CapacitiveSensor capSensor = CapacitiveSensor(4,2);     //(4,2) = (Pin der das leitfähige Material sendet, Pin der das Material empfängt)
+    
+    int threshold = 50;       //Ab diesen Wert leuchtet das LED; Wenn der Wert nur knapp über den Standardwert der vom Sensor abgelesen wird ist, kann man das LED zum leuchten bringen indem man nur in die Nähe des Metalles kommt, ohne es zu berühren
+    const int ledPin = 12;
+    
+    void setup() {
+        Serial.begin(9600);
+        pinMode(ledPin, OUTPUT);
+    }
+    
+    void loop() {
+        long sensorValue = capSensor.capacitiveSensor(30);    //Der Wert in der Klammer (x) ist die Anzahl der Proben die der Sensor abliest, bei zu wenig kann es zu Ungenauigkeiten kommen, bei zu vielen kann es zu Verzögerungen kommen
+        Serial.println(sensorValue);
+    
+        if(sensorValue &gt; threshold) {
+        digitalWrite(ledPin, HIGH);
+        }
+        else {
+        digitalWrite(ledPin, LOW);
+        }
+        delay(10);
+    } 
+
+    </pre>
+
+    <img class="img3" src="bilder/ArduinoTouchLamp.JPG" alt="Bild vom Projekt">
+
+    <p><a class="back" href="ArduinoCrystalBall.html">Zurück</a> <a class="back"
+            href="ArduinoHackingButtons.html">Weiter</a> <a class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+</body>
+
+</html>

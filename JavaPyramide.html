@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>2.1 Java Pyramide</h2>
+
+    <p>Man gibt ein wie hoch die Pyramide sein soll, dann wird sie mit dieser Höhe generiert.</p>
+
+    <pre class="code">
+import java.util.Scanner;
+
+public class AufgabePyramide {
+
+    public static void main(String[] args) {
+        
+        byte pyramide = -1;
+        
+        do {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Wie hoch soll die Pyramide sein?");
+                pyramide = scanner.nextByte();
+            } catch (Exception e) {
+                System.out.println("Nur gültige Zahl eingeben (max.127)");
+            };
+        } while (pyramide == -1);
+        
+        int j=pyramide;
+        int k=0;
+        int i=0;
+        
+        
+        while (pyramide&gt;0) {
+            
+        while (i&lt;pyramide) 
+            {System.out.print("  ");
+            i++;
+            }
+        
+        while (j-pyramide&gt;=k)
+        {System.out.print("X ");
+        k++;
+        }
+        
+        System.out.println();
+        pyramide--; j++; k=0; i=0;
+        }
+        
+    }
+
+}
+
+    </pre>
+
+    <img class="img2" src="Bilder/JavaPyramide.PNG" alt="Ergebnis in der Konsole">
+
+    <p><a class="back" href="WebsiteCB.html">Zurück</a> <a class="back" href="JavaCäsarChiffre.html">Weiter</a> <a
+            class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Portfolio</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+	<h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+	<h2>2.3 Java Kassabon</h2>
+
+	<p>Die Kosten der Produkte werden ausgerechnet und wie ein Kassabon angezeigt.<br>
+		Preis und Anzahl der Produkte können im Code geändert werden.</p>
+
+	<pre class="code">
+public class AufgabeKassabon {
+
+	public static void main(String[] args) {
+		double Wurst=4.20;
+		double Kaese=2.30;
+		double Brot=2.11;
+		double DVD=12.00;
+		double Geld=50.00;
+		int Stk;
+		
+		Stk=4;
+		double ergWurst=Wurst*Stk;
+		System.out.println("Wurst	"+Stk+"x	"+Wurst+" EUR");
+		System.out.println("				"+ergWurst+" EUR");
+		
+		Stk=1;
+		double ergKaese=Kaese*Stk;
+		System.out.println("Käse	"+Stk+"x	"+Kaese+" EUR");
+		System.out.println("				"+ergKaese+" EUR");
+		
+		Stk=2;
+		double ergBrot=Brot*Stk;
+		System.out.println("Brot	"+Stk+"x	"+Brot+" EUR");
+		System.out.println("				"+ergBrot+" EUR");
+		
+		Stk=3;
+		double ergDVD=DVD*Stk;
+		System.out.println("DVD	"+Stk+"x	"+DVD+" EUR");
+		System.out.println("				"+ergDVD+" EUR");
+		
+		System.out.println("-----------------------------------------");
+		
+		double erg=ergWurst+ergKaese+ergBrot+ergDVD;
+		System.out.println("Gesammt				"+erg+" EUR");
+		
+		System.out.println("Gegeben				"+Geld+" EUR");
+		
+		double Rueckgeld=Geld-erg;
+		double Fehlgeld=erg-Geld;
+		if (Geld>=erg) {System.out.println("Zurueck				"+Rueckgeld+" EUR");}
+		else {System.out.println("Sie haben "+Fehlgeld+" EUR zu wenig!");}
+				
+
+	}
+
+}
+
+</pre>
+
+	<img class="img2" src="Bilder/JavaKassabon.PNG" alt="Ergebnis in der Konsole">
+
+	<p><a class="back" href="JavaCäsarChiffre.html">Zurück</a> <a class="back" href="JavaPasswort.html">Weiter</a> <a
+			class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+
+
+</body>
+
+</html>

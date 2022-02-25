@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>3.7 Tic-Tac-Toe (WIP)</h2>
+
+    <p>Eigenprojekt<br>
+        <br>
+        Das Spiel hat bereits:<br>
+        &nbsp;&nbsp;-Eine KI die einen Spielzug vorausdenken kann<br>
+        &nbsp;&nbsp;-2 Spieler Modus<br>
+        &nbsp;&nbsp;-GameOver Sound<br>
+        <br>
+        Probleme die noch bearbeitet werden:<br>
+        &nbsp;&nbsp;-Steuerung muss noch optimiert werden<br>
+        &nbsp;&nbsp;-die KI reagiert sofort, deshalb erkennt man manchmal nicht welches Feld in dem Zug gedrückt wurde
+    </p>
+
+    <pre class="code">
+int led[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
+int cursor = 6;
+byte turnPlayer = 1;
+int switchState[] {0, 0, 0, 0, 0, 0};
+int previousSwitchState[] {1, 1, 1, 1, 1, 1};
+int randomNumber;
+int line = 0;
+int line2 = 0;
+boolean p2 = 0;
+
+//led[0] = cursor "2" = pin "2"
+//turnPlayer: 0 = Gegner, 1 = Spieler1, 2= Spieler 2
+//switchState[0] = pin "A1" (Eingabetaste); [1-4] = Richtungstasten
+//switchState [5] = pin "13" (2-Spieler-Taste)
+
+void setup() {
+    for (int i = 2; i &lt; 11; i++) {
+    pinMode (i, OUTPUT);
+    }
+    for (int i = A1; i &lt; A6; i++) {
+    pinMode (i, INPUT);
+    }
+}
+
+
+
+
+
+void loop() {
+
+
+    //LEDs / zeigt an welche LEDs schon gedrückt wurden:
+
+    if (millis() % 20 &gt; 0 && millis() % 20 &lt; 5) {
+
+
+    for (int i = 0; i &lt; 9; i++) {
+        if (led[i] == 0 && i != cursor - 2) {
+        digitalWrite (i + 2, HIGH);
+        }
+        else if (led[i] == 2) {
+        digitalWrite (i + 2, LOW);
+        }
+    }
+    }
+
+    else {
+
+
+    for (int i = 0; i &lt; 9; i++) {
+        if (led[i] == 0 && i != cursor - 2) {
+        digitalWrite (i + 2, LOW);
+        }
+        else if (led[i] == 1) {
+        digitalWrite (i + 2, HIGH);
+        }
+    }
+    }
+
+
+
+
+
+    //Cursor:
+
+
+    if (millis() % 1000 &gt; 0 && millis() % 1000 &lt; 500) {
+    digitalWrite (cursor, HIGH);
+    }
+    else {
+    digitalWrite (cursor, LOW);
+
+    }
+    if (millis() % 1000 &gt; 0 && millis () % 1000 &lt; 5) {
+    tone (A0, 100);
+    noTone (A0);
+    }
+
+
+    //nach unten
+    switchState[4] = digitalRead (A5);
+    if (switchState[4] != previousSwitchState[4]) {
+    if (switchState[4] == HIGH) {
+        cursor = cursor - 3;
+        if (cursor &lt; 2) {
+        cursor = cursor + 3;
+        }
+        if  (led[cursor - 2] != 0) {
+        cursor = cursor - 3;
+        if (cursor &lt; 2) {
+            cursor = cursor + 6;
+        }
+        }
+    }
+    }
+
+
+    //nach rechts
+    switchState[3] = digitalRead (A4);
+    if (switchState[3] != previousSwitchState[3]) {
+    if (switchState[3] == HIGH) {
+        cursor--;
+        while (led[cursor - 2] != 0 || cursor == 1) {
+        cursor--;
+        if (cursor &lt; 2) {
+            cursor = 10;
+        }
+        }
+    }
+    }
+
+    //nach links
+    switchState[2] = digitalRead (A3);
+    if (switchState[2] != previousSwitchState[2]) {
+    if (switchState[2] == HIGH) {
+        cursor++;
+        while (led[cursor - 2] != 0) {
+        cursor++;
+        if (cursor &gt; 10) {
+            cursor = 2;
+        }
+        }
+    }
+    }
+
+    //nach oben
+    switchState[1] = digitalRead (A2);
+    if (switchState[1] != previousSwitchState[1]) {
+    if (switchState[1] == HIGH) {
+        cursor = cursor + 3;
+        if (cursor &gt; 10) {
+        cursor = cursor - 3;
+        }
+        if  (led[cursor - 2] != 0) {
+        cursor = cursor + 3;
+        if (cursor &gt; 10) {
+            cursor = cursor - 6;
+        }
+        }
+    }
+    }
+
+    // 2 Spieler ein/aus:
+
+    switchState [5] = digitalRead (13);
+    if (switchState [5] != previousSwitchState [5]) {
+    if (switchState[5] == HIGH) {
+        p2 = !p2;
+        if (p2 == true) {
+        tone (A0, 100);
+        delay (100);
+        tone (A0, 200);
+        delay (100);
+        noTone (A0);
+        }
+        else {
+        tone (A0, 200);
+        delay (100);
+        tone (A0, 100);
+        delay (100);
+        noTone (A0);
+        }
+    }
+    }
+
+
+
+    //Eingabetaste:
+
+
+    switchState [0] = digitalRead (A1);
+    if (switchState [0] != previousSwitchState [0]) {
+    if (switchState[0] == HIGH) {
+        if (p2) {
+        led[cursor - 2] = turnPlayer;
+        if (turnPlayer == 1) {
+            turnPlayer = 2;
+        }
+        else turnPlayer = 1;
+        }
+        else if (turnPlayer == 1) {
+        led[cursor - 2] = 1;
+        turnPlayer = 0;
+        }
+    }
+    if (gameOver() == false) {
+        while (led[cursor - 2] != 0) {
+        cursor++;
+        if (cursor &gt; 10) {
+            cursor = 2;
+        }
+        }
+    }
+    }
+
+
+    for (int i = 0; i &lt; 6; i++) {
+    previousSwitchState[i] = switchState[i];
+    }
+
+
+
+    //Computer (Gegner)
+
+    if (turnPlayer == 0) {
+    for (int i = 0; i &lt; 9 && turnPlayer == 0; i++) {
+        if (led[i] == 0) {
+        led[i] = 2;
+        if (gameOver() == false) {
+            led[i] = 0;
+        }
+        else {
+            turnPlayer = 1;
+        }
+        }
+    }
+
+    for (int i = 0; i &lt; 9 && turnPlayer == 0; i++) {
+        if (led[i] == 0) {
+        led[i] = 1;
+        if (gameOver() == true) {
+            led[i] = 2;
+            turnPlayer = 1;
+        }
+        else {
+            led[i] = 0;
+        }
+        }
+    }
+
+    if (turnPlayer == 0) {
+        randomNumber = random(8);
+        if (led[randomNumber] == 0) {
+        led[randomNumber] = 2;
+        turnPlayer = 1;
+        }
+    }
+    for (cursor = 2; led[cursor - 2] != 0; cursor ++) {
+    }
+    }
+
+
+    //GameOver / Neustart und Sound:
+
+    if (gameOver() == true) {
+    switch (line2) {
+        case 1:
+        if (led[0] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 2:
+        if (led[3] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 3:
+        if (led[6] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 4:
+        if (led[0] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 5:
+        if (led[1] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 6:
+        if (led[2] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 7:
+        if (led[0] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 8:
+        if (led[2] == 1) {
+            sound1();
+        }
+        else sound2();
+        break;
+        case 9: sound3();
+        break;
+    }
+    for (int i = 0; i &lt; 9; i++) {
+        led[i] = 0;
+    }
+    turnPlayer = 1;
+    cursor = 6;
+    }
+}
+
+
+
+boolean gameOver() {                                 //Funktion die kontrolliert ob das Spiel vorbei ist.
+    if (led[0] == led[1] && led[1] == led[2] && led[2] != 0) {
+    line = 1;
+    }
+    if (led[3] == led[4] && led[4] == led[5] && led[5] != 0) {
+    line = 2;
+    }
+    if (led[6] == led[7] && led[7] == led[8] && led[8] != 0) {
+    line = 3;
+    }
+    if (led[0] == led[3] && led[3] == led[6] && led[6] != 0) {
+    line = 4;
+    }
+    if (led[1] == led[4] && led[4] == led[7] && led[7] != 0) {
+    line = 5;
+    }
+    if (led[2] == led[5] && led[5] == led[8] && led[8] != 0) {
+    line = 6;
+    }
+    if (led[0] == led[4] && led[4] == led[8] && led[8] != 0) {
+    line = 7;
+    }
+    if (led[2] == led[4] && led[4] == led[6] && led[6] != 0) {
+    line = 8;
+    }
+    if (led[0] && led[1] && led[2] && led[3] && led[4] && led[5] && led[6] && led[7] && led[8] != 0) {
+    line = 9;
+    }
+    if (line &gt; 0) {
+    line2 = line;
+    line = 0;
+    return true;
+    }
+    else return false;
+}
+
+
+int sound1() {          //Sound der bei GameOver gespielt wird; 1 = Sieg, 2 = Niederlage, 3 = Unentschieden
+    tone (A0, 250);
+    delay (200);
+    noTone (A0);
+    tone (A0, 250);
+    delay (100);
+    tone (A0, 350);
+    delay (500);
+    noTone (A0);
+}
+
+int sound2() {
+
+    tone (A0, 200);
+    delay (400);
+    tone (A0, 100);
+    delay (400);
+    tone (A0, 150);
+    delay (800);
+    noTone (A0);
+}
+
+int sound3() {
+    tone (A0, 150);
+    delay (300);
+    tone (A0, 250);
+    delay (300);
+    tone (A0, 150);
+    delay (300);
+    noTone (A0);
+}
+    </pre>
+
+    <video class="img3" controls>
+        <source src="bilder/ArduinoTicTacToe.MOV" type="video/mp4">
+    </video>
+    <p>Im Video kann man leider kaum erkennen, dass die nicht gedrückten LEDs nur halbstark leuchten.</p>
+    <br>
+    <p><a class="back" href="ArduinoHackingButtons.html">Zurück</a> <a class="back" href="Portfolio.html">Zur
+            Übersicht</a></p>
+
+</body>
+
+</html>

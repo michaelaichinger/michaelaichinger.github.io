@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg">
+    <h1><a class="port" href="Portfolio.html"> Portfolio</a></h1>
+    <h2>2.4 Java Passwort</h2>
+
+    <p>Es wird ein zufälliges Passwort mit 4 Stellen generiert.<br>
+        Anschließend wird das Passwort geknackt, indem alle möglichen Kombinationen durchprobiert werden.</p>
+
+    <pre class="code">
+import java.util.Random;
+public class AufgabePasswort {
+
+    public static void main(String[] args) {
+
+        StringBuilder Password=new StringBuilder("    ");
+        
+        Random random=new Random();
+
+        String pwchars="1234567890ßqwertzuiopü+asdfghjklöä#yxcvbnm,.-!§$%&/()=?QWERTZUIOPÜ*ASDFGHJKLÖÄ'YXCVBNM;:_";
+        
+        int randomInt=random.nextInt(pwchars.length());
+        char pw1=pwchars.charAt(randomInt);
+        Password.setCharAt(0, pw1);
+        
+        randomInt=random.nextInt(pwchars.length());
+        char pw2=pwchars.charAt(randomInt);
+        Password.setCharAt(1, pw2);
+        
+        randomInt=random.nextInt(pwchars.length());
+        char pw3=pwchars.charAt(randomInt);
+        Password.setCharAt(2, pw3);
+        
+        randomInt=random.nextInt(pwchars.length());
+        char pw4=pwchars.charAt(randomInt);
+        Password.setCharAt(3, pw4);
+        
+        int pwint=pwchars.length();
+        StringBuilder password=new StringBuilder("    ");
+        char pwc=' ';
+        int l=1;
+        int k=1;
+        int j=1;
+        int i=1;
+        
+        while (!(Password.toString().equals(password.toString()))) {
+            while (pwint&gt;=l&&k==pwint+1)
+            {pwc=pwchars.charAt(pwint-l);
+            password.setCharAt(0,pwc);
+            System.out.println(password);
+            l++;k=1;}
+                while (pwint&gt;=k&&j==pwint+1)
+                {pwc=pwchars.charAt(pwint-k);
+                password.setCharAt(1,pwc);
+                System.out.println(password);
+                k++;j=1;}
+                    while (pwint&gt;=j&&i==pwint+1)
+                    {pwc=pwchars.charAt(pwint-j);
+                    password.setCharAt(2,pwc);
+                    System.out.println(password);
+                    j++;i=1;}
+                    while (pwint&gt;=i&&!(Password.toString().equals(password.toString())))
+                        {pwc=pwchars.charAt(pwint-i);
+                        password.setCharAt(3,pwc);
+                        System.out.println(password);
+                        i++;}
+                    }
+        
+        System.out.println("Das Passwort ist: "+password);
+                
+    }
+
+}
+
+    </pre>
+
+    <img class="img2" src="Bilder/JavaPasswort.PNG" alt="Ergebnis in der Konsole">
+
+    <p><a class="back" href="JavaKassabon.html">Zurück</a> <a class="back" href="JavaKino.html">Weiter</a> <a
+            class="back" href="Portfolio.html">Zur Übersicht</a></p>
+
+
+
+</body>
+
+</html>
